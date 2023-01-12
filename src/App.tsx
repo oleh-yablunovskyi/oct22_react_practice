@@ -18,19 +18,15 @@ function getUserByOwnerId(OwnerId: number | undefined): User | null {
   return usersFromServer.find(user => user.id === OwnerId) || null;
 }
 
-const productsWithCategory = productsFromServer.map(product => (
-  {
-    ...product,
-    category: getCategoryById(product.categoryId),
-  }
-));
+const finalProducts: FinalProduct[] = productsFromServer.map(product => {
+  const foundedCategory = getCategoryById(product.categoryId);
 
-const finalProducts: FinalProduct[] = productsWithCategory.map(product => (
-  {
+  return {
     ...product,
-    owner: getUserByOwnerId(product.category?.ownerId),
-  }
-));
+    category: foundedCategory,
+    owner: getUserByOwnerId(foundedCategory?.ownerId),
+  };
+});
 
 export const App: React.FC = () => {
   const [selectedUserID, setSelectedUserID] = useState(0);
