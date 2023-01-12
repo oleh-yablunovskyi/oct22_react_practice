@@ -34,6 +34,7 @@ const finalProducts: PreparedProduct[] = productsWithCategory.map(product => (
 
 export const App: React.FC = () => {
   const [selectedUserID, setSelectedUserID] = useState(0);
+  const [query, setQuery] = useState('');
 
   let visibleProducts = [...finalProducts];
 
@@ -41,6 +42,20 @@ export const App: React.FC = () => {
     visibleProducts = visibleProducts.filter(product => (
       product.owner?.id === selectedUserID
     ));
+  }
+
+  if (query) {
+    visibleProducts = visibleProducts.filter(product => {
+      const productName = product.name.toLowerCase();
+
+      const normalizedQuery = query
+        .toLowerCase()
+        .split(' ')
+        .filter(Boolean)
+        .join(' ');
+
+      return productName.includes(normalizedQuery);
+    });
   }
 
   return (
@@ -90,7 +105,8 @@ export const App: React.FC = () => {
                   type="text"
                   className="input"
                   placeholder="Search"
-                  value="qwe"
+                  value={query}
+                  onChange={(event) => setQuery(event.currentTarget.value)}
                 />
 
                 <span className="icon is-left">
