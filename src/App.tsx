@@ -8,7 +8,7 @@ import categoriesFromServer from './api/categories';
 
 import { Category } from './types/Category';
 import { User } from './types/User';
-import { PreparedProduct } from './types/PreparedProduct';
+import { FinalProduct } from './types/FinalProduct';
 
 function getCategoryById(id: number): Category | null {
   return categoriesFromServer.find(category => category.id === id) || null;
@@ -25,7 +25,7 @@ const productsWithCategory = productsFromServer.map(product => (
   }
 ));
 
-const finalProducts: PreparedProduct[] = productsWithCategory.map(product => (
+const finalProducts: FinalProduct[] = productsWithCategory.map(product => (
   {
     ...product,
     owner: getUserByOwnerId(product.category?.ownerId),

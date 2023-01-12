@@ -1,7 +1,7 @@
 import { Category } from './Category';
 import { User } from './User';
 
-export interface PreparedProduct {
+export interface FinalProduct {
   id: number;
   name: string;
   categoryId: number;
